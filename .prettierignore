@@ -1,1 +1,13 @@
 *.sops.*
+
+# Dependencies
+node_modules
+
+# Nuxt build artifacts
+.nuxt
+.output
+.data
+dist
+
+# Lockfiles
+package-lock.json

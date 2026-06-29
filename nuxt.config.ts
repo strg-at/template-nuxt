@@ -1,4 +1,7 @@
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  srcDir: 'src',
-  modules: ['@pinia/nuxt'],
+  compatibilityDate: '2025-01-01',
+  devtools: { enabled: true },
+  telemetry: false,
+  modules: ['@nuxt/eslint', '@pinia/nuxt'],
 })

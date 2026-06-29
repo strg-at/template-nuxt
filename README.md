@@ -27,6 +27,7 @@ Short project description
 - [Getting Started](#getting-started)
   - [Prerequisties](#prerequisties)
   - [Initialize repository](#initialize-repository)
+- [Development](#development)
 - [Configuration](#configuration)
   - [Preparation](#preparation)
 - [Known Issues](#known-issues)
@@ -42,6 +43,7 @@ Short project description
 
 ### Prerequisties
 
+- [Node.js][nodejs] `22.x` (see `.nvmrc` — run `nvm use`)
 - [pre-commit][pre-commit]
 - [yamllint][yamllint]
 
@@ -52,6 +54,31 @@ Pre-commit framework need to get initialized.
 ```console
 task pre-commit:init
 ```
+
+Install dependencies (also runs `nuxt prepare` via `postinstall`):
+
+```console
+npm install
+```
+
+## Development
+
+This is a [Nuxt 4][nuxt] application. Application source lives in the `app/`
+directory (`app.vue`, `components/`, `composables/`, `pages/`, …); `server/`,
+`shared/`, `modules/` and `public/` stay at the project root.
+
+| Script                  | Description                                        |
+| ----------------------- | -------------------------------------------------- |
+| `npm run dev`           | Start the dev server on `0.0.0.0:3000`.            |
+| `npm run build`         | Build for production.                              |
+| `npm run generate`      | Pre-render a static site.                          |
+| `npm run preview`       | Preview the production build.                      |
+| `npm run lint`          | Lint with ESLint (flat config via `@nuxt/eslint`). |
+| `npm run lint:fix`      | Lint and auto-fix.                                 |
+| `npm run format`        | Format with Prettier.                              |
+| `npm run typecheck`     | Type-check with `vue-tsc`.                         |
+| `npm run test`          | Run unit tests with Vitest (`@nuxt/test-utils`).   |
+| `npm run test:coverage` | Run tests with coverage (`@vitest/coverage-v8`).   |
 
 ## Configuration
 
@@ -65,13 +92,17 @@ git switch -c feature/INPRO-1-configure-resource
 
 ## Known Issues
 
-<!-- TBD -->
+- **Storybook** is intentionally not included yet. The Nuxt-integrated framework
+  (`@storybook-vue/nuxt`) only supports Nuxt 4 in prerelease builds. Add it via
+  `npx nuxi module add storybook` once it ships a stable Nuxt 4 release.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 <!-- Links -->
 
+[nodejs]: https://nodejs.org/
+[nuxt]: https://nuxt.com/
 [pre-commit]: https://pre-commit.com/
 [yamllint]: https://github.com/adrienverge/yamllint
 
