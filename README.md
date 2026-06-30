@@ -24,6 +24,7 @@ Short project description
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Code-Style](#code-style)
+- [Agentic Coding Standards](#agentic-coding-standards)
 - [Getting Started](#getting-started)
   - [Prerequisties](#prerequisties)
   - [Initialize repository](#initialize-repository)
@@ -39,6 +40,38 @@ Short project description
 
 <!-- TBD -->
 
+## Agentic Coding Standards
+
+This repo consumes the shared [STRG. agentic coding standards][standards].
+The standards repo is cloned into `.standards/` and its content is symlinked
+into `.agents/` (always-loaded instructions + skills) and `.claude/skills/`.
+
+```text
+.standards/          # clone of the standards repo (local tooling, gitignored)
+.agents/             # symlinks to the standards relevant for this repo
+.claude/skills/      # symlinks to the shared skills
+AGENTS.md            # links the standards relevant to this Nuxt stack
+CLAUDE.md            # delegates to AGENTS.md (@AGENTS.md)
+```
+
+`AGENTS.md` links the instructions relevant to this stack: the core guardrails
+(`agent-instructions`, `commit-conventions`, `security`) plus the
+`coding-style-typescript` and `coding-style-vue-nuxt` styles.
+
+Install or refresh the standards (also runs on a fresh clone):
+
+```console
+task standards:setup     # clone/pull .standards and install symlinks
+task standards:update    # refresh symlinks from the latest standards
+```
+
+The `.standards/` clone and the installed `.agents/` / `.claude/skills/`
+symlinks are local tooling and are not committed — this repo uses an
+allowlist `.gitignore` (ignore `*`, then `!`-allow tracked paths), so they
+fall through the leading `*`. Only real custom skills/overrides are allowed
+back in. See [`.standards/docs/installation.md`][standards-install] for the
+full integration guide.
+
 ## Getting Started
 
 ### Prerequisties
@@ -46,6 +79,8 @@ Short project description
 - [Node.js][nodejs] `22.x` (see `.nvmrc` — run `nvm use`)
 - [pre-commit][pre-commit]
 - [yamllint][yamllint]
+- [Task][taskfile-url] — task runner (used by `task standards:setup`)
+- [GitHub CLI (`gh`)][gh] — required by the `create-pr` skill
 
 ### Initialize repository
 
@@ -105,6 +140,9 @@ git switch -c feature/INPRO-1-configure-resource
 [nuxt]: https://nuxt.com/
 [pre-commit]: https://pre-commit.com/
 [yamllint]: https://github.com/adrienverge/yamllint
+[gh]: https://cli.github.com/
+[standards]: https://github.com/strg-at/agentic-coding-standards
+[standards-install]: .standards/docs/installation.md
 
 <!-- Badges -->
 
