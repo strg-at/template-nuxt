@@ -29,6 +29,7 @@ Short project description
   - [Prerequisties](#prerequisties)
   - [Initialize repository](#initialize-repository)
 - [Development](#development)
+  - [Running npm in Docker](#running-npm-in-docker)
 - [Configuration](#configuration)
   - [Preparation](#preparation)
 - [Known Issues](#known-issues)
@@ -76,11 +77,13 @@ full integration guide.
 
 ### Prerequisties
 
-- [Node.js][nodejs] `22.x` (see `.nvmrc` — run `nvm use`)
+- [Docker][docker] — all npm operations run inside the pinned Node image
+- [Task][taskfile-url] — task runner (drives `task npm:*` and `task standards:setup`)
 - [pre-commit][pre-commit]
 - [yamllint][yamllint]
-- [Task][taskfile-url] — task runner (used by `task standards:setup`)
 - [GitHub CLI (`gh`)][gh] — required by the `create-pr` skill
+- [Node.js][nodejs] (optional, see `.nvmrc` — run `nvm use`) — only needed if
+  you want to run npm directly on the host instead of via `task npm`
 
 ### Initialize repository
 
@@ -90,10 +93,11 @@ Pre-commit framework need to get initialized.
 task pre-commit:init
 ```
 
-Install dependencies (also runs `nuxt prepare` via `postinstall`):
+Install dependencies (runs inside the Node Docker image, also runs
+`nuxt prepare` via `postinstall`):
 
 ```console
-npm install
+task npm:install
 ```
 
 ## Development
@@ -102,18 +106,33 @@ This is a [Nuxt 4][nuxt] application. Application source lives in the `app/`
 directory (`app.vue`, `components/`, `composables/`, `pages/`, …); `server/`,
 `shared/`, `modules/` and `public/` stay at the project root.
 
-| Script                  | Description                                        |
-| ----------------------- | -------------------------------------------------- |
-| `npm run dev`           | Start the dev server on `0.0.0.0:3000`.            |
-| `npm run build`         | Build for production.                              |
-| `npm run generate`      | Pre-render a static site.                          |
-| `npm run preview`       | Preview the production build.                      |
-| `npm run lint`          | Lint with ESLint (flat config via `@nuxt/eslint`). |
-| `npm run lint:fix`      | Lint and auto-fix.                                 |
-| `npm run format`        | Format with Prettier.                              |
-| `npm run typecheck`     | Type-check with `vue-tsc`.                         |
-| `npm run test`          | Run unit tests with Vitest (`@nuxt/test-utils`).   |
-| `npm run test:coverage` | Run tests with coverage (`@vitest/coverage-v8`).   |
+### Running npm in Docker
+
+All npm operations run inside the pinned `node:<.nvmrc>-alpine` image (defined
+in [`.taskfiles/npm.yaml`](.taskfiles/npm.yaml)) so the Node/npm version is
+identical for everyone and no global Node install is required. The container
+runs as your user and reuses the host npm cache, so files it writes stay owned
+by you.
+
+Run any npm command with `task npm -- <args>` (e.g. `task npm -- install lodash`,
+`task npm -- update`), or use the shortcut tasks below:
+
+| Task                    | npm script             | Description                                        |
+| ----------------------- | ---------------------- | -------------------------------------------------- |
+| `task npm:install`      | `npm install`          | Install dependencies.                              |
+| `task npm:ci`           | `npm ci`               | Install from the lockfile.                         |
+| `task npm:build`        | `npm run build`        | Build for production.                              |
+| `task npm:lint`         | `npm run lint`         | Lint with ESLint (flat config via `@nuxt/eslint`). |
+| `task npm:lint:fix`     | `npm run lint:fix`     | Lint and auto-fix.                                 |
+| `task npm:format`       | `npm run format`       | Format with Prettier.                              |
+| `task npm:format:check` | `npm run format:check` | Check formatting without writing.                  |
+| `task npm:typecheck`    | `npm run typecheck`    | Type-check with `vue-tsc`.                         |
+| `task npm:test`         | `npm run test`         | Run unit tests with Vitest (`@nuxt/test-utils`).   |
+| `task npm:test:update`  | `npm run test:update`  | Run tests in update mode (refresh snapshots).      |
+
+The dev server (`npm run dev`) and preview (`npm run preview`) are typically run
+on the host during development; run them with `task npm -- run dev` if you
+prefer the container.
 
 ## Configuration
 
@@ -136,6 +155,7 @@ git switch -c feature/INPRO-1-configure-resource
 
 <!-- Links -->
 
+[docker]: https://www.docker.com/
 [nodejs]: https://nodejs.org/
 [nuxt]: https://nuxt.com/
 [pre-commit]: https://pre-commit.com/

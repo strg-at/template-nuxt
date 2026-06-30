@@ -18,6 +18,7 @@
     "typecheck": "nuxt prepare && vue-tsc -b --noEmit",
     "test": "vitest run",
     "test:unit": "vitest run",
+    "test:update": "vitest -u",
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage"
   },
