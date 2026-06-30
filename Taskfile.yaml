@@ -9,6 +9,7 @@ includes:
   standards:
     taskfile: .standards/templates/Taskfile.standards.yaml
     optional: true
+  npm: .taskfiles/npm.yaml
   pre-commit: .taskfiles/pre-commit.yaml
 
 tasks:
