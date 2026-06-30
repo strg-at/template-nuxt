@@ -126,7 +126,7 @@ Run any npm command with `task npm -- <args>` (e.g. `task npm -- install lodash`
 | `task npm:lint:fix`     | `npm run lint:fix`     | Lint and auto-fix.                                 |
 | `task npm:format`       | `npm run format`       | Format with Prettier.                              |
 | `task npm:format:check` | `npm run format:check` | Check formatting without writing.                  |
-| `task npm:typecheck`    | `npm run typecheck`    | Type-check with `vue-tsc`.                         |
+| `task npm:type-check`   | `npm run type-check`   | Type-check with `vue-tsc`.                         |
 | `task npm:test`         | `npm run test`         | Run unit tests with Vitest (`@nuxt/test-utils`).   |
 | `task npm:test:update`  | `npm run test:update`  | Run tests in update mode (refresh snapshots).      |
 

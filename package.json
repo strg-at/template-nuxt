@@ -15,7 +15,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "nuxt prepare && vue-tsc -b --noEmit",
+    "type-check": "nuxt prepare && vue-tsc -b --noEmit",
     "test": "vitest run",
     "test:unit": "vitest run",
     "test:update": "vitest -u",

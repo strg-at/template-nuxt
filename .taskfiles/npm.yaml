@@ -104,12 +104,12 @@ tasks:
       - task: command
         vars: { COMMAND: "run format:check" }
 
-  typecheck:
+  type-check:
     desc: Type-check the code base with vue-tsc.
     interactive: true
     cmds:
       - task: command
-        vars: { COMMAND: "run typecheck" }
+        vars: { COMMAND: "run type-check" }
 
   test:
     desc: Run all unit tests.
