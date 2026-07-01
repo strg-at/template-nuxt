@@ -6,4 +6,15 @@ vars:
     sh: "git rev-parse --show-toplevel"
 
 includes:
+  standards:
+    taskfile: .standards/templates/Taskfile.standards.yaml
+    optional: true
+  npm: .taskfiles/npm.yaml
   pre-commit: .taskfiles/pre-commit.yaml
+
+tasks:
+  standards:setup:
+    desc: Bootstrap and install STRG. standards
+    cmds:
+      - git clone git@github.com:strg-at/agentic-coding-standards.git .standards 2>/dev/null || git -C .standards pull --ff-only
+      - task standards:update
