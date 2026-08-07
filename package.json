@@ -25,7 +25,7 @@
   "dependencies": {
     "@pinia/nuxt": "0.11.3",
     "@strg/logging-winston": "3.1.0",
-    "nuxt": "4.4.8",
+    "nuxt": "4.5.1",
     "pinia": "3.0.4"
   },
   "devDependencies": {
